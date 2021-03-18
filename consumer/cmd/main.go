@@ -7,6 +7,7 @@ import (
 
 	"github.com/Yangiboev/golang-mongodb-kafka/config"
 	"github.com/Yangiboev/golang-mongodb-kafka/pkg/logger"
+	"github.com/Yangiboev/golang-mongodb-kafka/storage/entity"
 	"github.com/Yangiboev/golang-mongodb-kafka/sub/handlers"
 	"github.com/Yangiboev/golang-mongodb-kafka/sub/kafka"
 	"github.com/Yangiboev/golang-mongodb-kafka/sub/parsers"
@@ -54,11 +55,11 @@ func main() {
 	}
 
 	ps := parsers.NewParsers(log)
-	handler := handlers.NewEventHandler(&handlers.EventHandlerArgs{
-
+	handler := handlers.EventHandler(&handlers.EventHandlerArgs{
 		Logger:  log,
 		Parsers: ps,
 		DB:      db,
+		Product: []entity.Product{},
 	})
 
 	consumer, err := kafka.NewConsumer(&cfg, log, handler)
@@ -69,7 +70,7 @@ func main() {
 	}
 
 	go func() {
-		if err := consumer.Subscribe([]string{topics.InfoTopic}); err != nil {
+		if err := consumer.Subscribe([]string{topics.ProductInfoTopic}); err != nil {
 			log.Error("error", logger.Error(err))
 		}
 	}()

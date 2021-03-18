@@ -3,8 +3,8 @@ package mongo
 import (
 	"context"
 
-	"github.com/Yangiboev/golang-mongodb-kafka/api/models"
 	"github.com/Yangiboev/golang-mongodb-kafka/config"
+	"github.com/Yangiboev/golang-mongodb-kafka/storage/entity"
 	"github.com/Yangiboev/golang-mongodb-kafka/storage/repo"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -20,7 +20,7 @@ func NewProductRepo(db *mongo.Database) repo.ProductStorageI {
 		collection: db.Collection(config.CollectionName)}
 }
 
-func (pr *productRepo) Create(product *models.Product) (string, error) {
+func (pr *productRepo) Create(product *entity.Product) (string, error) {
 	_, err := pr.collection.InsertOne(
 		context.Background(),
 		product,
@@ -33,8 +33,8 @@ func (pr *productRepo) Create(product *models.Product) (string, error) {
 	return product.ID, nil
 }
 
-func (pr *productRepo) Get(id string) (*models.Product, error) {
-	var product models.Product
+func (pr *productRepo) Get(id string) (*entity.Product, error) {
+	var product entity.Product
 	response := pr.collection.FindOne(
 		context.Background(),
 		bson.M{
@@ -50,10 +50,10 @@ func (pr *productRepo) Get(id string) (*models.Product, error) {
 	return &product, nil
 }
 
-func (pr *productRepo) GetAll(page, limit int64, name string) ([]*models.Product, int64, error) {
+func (pr *productRepo) GetAll(page, limit int64, name string) ([]*entity.Product, int64, error) {
 
 	var (
-		products []*models.Product
+		products []*entity.Product
 		filter   = bson.D{}
 	)
 
@@ -87,7 +87,7 @@ func (pr *productRepo) GetAll(page, limit int64, name string) ([]*models.Product
 	}
 
 	for rows.Next(context.Background()) {
-		var product models.Product
+		var product entity.Product
 
 		err := rows.Decode(&product)
 

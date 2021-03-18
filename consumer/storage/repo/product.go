@@ -1,11 +1,9 @@
 package repo
 
-import (
-	"github.com/Yangiboev/golang-mongodb-kafka/api/models"
-)
+import "github.com/Yangiboev/golang-mongodb-kafka/storage/entity"
 
 type ProductStorageI interface {
-	Create(product *models.Product) (string, error)
-	Get(id string) (*models.Product, error)
-	GetAll(page, limit int64, name string) ([]*models.Product, int64, error)
+	Create(product *entity.Product) (string, error)
+	Get(id string) (*entity.Product, error)
+	GetAll(page, limit int64, name string) ([]*entity.Product, int64, error)
 }

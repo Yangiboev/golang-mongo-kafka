@@ -6,20 +6,20 @@ import (
 	db "go.mongodb.org/mongo-driver/mongo"
 )
 
-type Pg interface {
+type StorageI interface {
 	Product() repo.ProductStorageI
 }
 
-type pg struct {
+type product struct {
 	productRepo repo.ProductStorageI
 }
 
-func NewPg(db *db.Database) Pg {
-	return &pg{
+func NewProductStorage(db *db.Database) StorageI {
+	return &product{
 		productRepo: mongo.NewProductRepo(db),
 	}
 }
 
-func (p pg) product() repo.productStorageI {
-	return p.productRepo
+func (pr product) Product() repo.ProductStorageI {
+	return pr.productRepo
 }

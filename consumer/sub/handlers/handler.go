@@ -1,8 +1,10 @@
 package handlers
 
+import "github.com/Yangiboev/golang-mongodb-kafka/storage/entity"
+
 // MessageHandlerI is interface contains methods which MsgEventHandler has to implement
-type productHandlerI interface {
+type ProductEventHandlerI interface {
 	Handle(topic string, key []byte, data []byte) error
-	OnTopic(topic string, key string, message *entity.product) error
-	parse(data []byte) (*entity.product, error)
+	OnTopic(topic string, key string, message *entity.Product) error
+	parse(data []byte) (*entity.Product, error)
 }

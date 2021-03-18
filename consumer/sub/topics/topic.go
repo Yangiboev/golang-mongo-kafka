@@ -1,9 +1,8 @@
 package topics
 
 var (
-	productKey       = "product"
+	ProductKey       = "product"
 	LogKey           = "product_log"
-	PriceKey         = "product_price"
 	UpdateKey        = "product_status"
-	productInfoTopic = "product_info"
+	ProductInfoTopic = "product_info"
 )

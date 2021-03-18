@@ -6,16 +6,17 @@ import (
 
 	"github.com/Yangiboev/golang-mongodb-kafka/config"
 	"github.com/Yangiboev/golang-mongodb-kafka/pkg/logger"
+	"github.com/Yangiboev/golang-mongodb-kafka/sub/handlers"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 )
 
 type Consumer struct {
 	kafkaReader         *kafka.Consumer
 	logger              logger.Logger
-	productEventHandler *handlers.productEventHandler
+	productEventHandler *handlers.EventHandler
 }
 
-func NewConsumer(cfg *config.Config, logger logger.Logger, productHandler *handlers.productEventHandler) (*Consumer, error) {
+func NewConsumer(cfg *config.Config, logger logger.Logger, productHandler *handlers.EventHandler) (*Consumer, error) {
 	connString := fmt.Sprintf("%s:%d", cfg.KafkaHost, cfg.KafkaPort)
 
 	productReader, err := kafka.NewConsumer(&kafka.ConfigMap{
