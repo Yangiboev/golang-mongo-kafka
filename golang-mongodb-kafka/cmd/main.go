@@ -22,7 +22,7 @@ func initDependencies() {
 	cfg = config.Load()
 	log = logger.New(cfg.LogLevel, "mongo-golang")
 
-	log.Info("main: SQLConfig",
+	log.Info("main: MONGO",
 		logger.String("Host", cfg.MongoHost),
 		logger.Int("Port", cfg.MongoPort),
 		logger.String("Database", cfg.MongoDatabase),
@@ -39,7 +39,7 @@ func initDependencies() {
 	if err != nil {
 		log.Error("error to connect to mongo database", logger.Error(err))
 	}
-	connDB := mongoConn.Database("mongo-golang")
+	connDB := mongoConn.Database(cfg.MongoDatabase)
 
 	log.Info("Connected to MongoDB", logger.Any("database: ", connDB.Name()))
 	strg = storage.NewProductStorage(connDB)

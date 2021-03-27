@@ -36,7 +36,7 @@ func Load() Config {
 	cfg.Environment = cast.ToString(getOrReturnDefaultValue("ENVIRONMENT", "develop"))
 	cfg.MongoHost = cast.ToString(getOrReturnDefaultValue("MONGO_HOST", "localhost"))
 	cfg.MongoPort = cast.ToInt(getOrReturnDefaultValue("MONGO_PORT", 27017))
-	cfg.MongoDatabase = cast.ToString(getOrReturnDefaultValue("MONGO_DATABASE", "go_mongodb"))
+	cfg.MongoDatabase = cast.ToString(getOrReturnDefaultValue("MONGO_DATABASE", "products"))
 	cfg.MongoUser = cast.ToString(getOrReturnDefaultValue("MONGO_USER", "dell"))
 	cfg.MongoPassword = cast.ToString(getOrReturnDefaultValue("MONGO_PASSWORD", "icon"))
 	cfg.LogLevel = cast.ToString(getOrReturnDefaultValue("LOG_LEVEL", "debug"))

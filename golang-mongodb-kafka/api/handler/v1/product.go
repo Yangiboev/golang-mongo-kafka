@@ -91,7 +91,7 @@ func (h *handlerV1) CreateProduct(c *gin.Context) {
 // @Tags product
 // @Accept  json
 // @Produce  json
-// @Param name path string false "name"
+// @Param name query string false "name"
 // @Success 200 {object} models.GetAllProductsResponse
 // @Failure 400 {object} models.BadRequestError
 // @Failure 500 {object} models.InternalServerError
@@ -106,10 +106,11 @@ func (h *handlerV1) GetAllProducts(c *gin.Context) {
 		HandleBadRequest(c, err, "Error while parsing page")
 		return
 	}
+
 	products, count, err := h.storage.Product().GetAll(page, limit, c.Query("name"))
 
 	if err != nil {
-		HandleBadRequest(c, err, "Error while getting all products")
+		HandleInternalServerError(c, err, "Error while getting all products")
 		return
 	}
 

@@ -10,7 +10,7 @@ REGISTRY=${REGISTRY}
 TAG=latest
 ENV_TAG=latest
 # Including
-include .build_info
+# include .build_info
 
 run:
 	docker-compose -f docker-compose.yml up --force-recreate

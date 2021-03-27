@@ -42,7 +42,7 @@ var doc = `{
                         "type": "string",
                         "description": "name",
                         "name": "name",
-                        "in": "path"
+                        "in": "query"
                     }
                 ],
                 "responses": {

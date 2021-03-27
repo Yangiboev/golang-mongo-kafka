@@ -2,6 +2,7 @@ package mongo
 
 import (
 	"context"
+	"time"
 
 	"github.com/Yangiboev/golang-mongodb-kafka/api/models"
 	"github.com/Yangiboev/golang-mongodb-kafka/config"
@@ -21,6 +22,9 @@ func NewProductRepo(db *mongo.Database) repo.ProductStorageI {
 }
 
 func (pr *productRepo) Create(product *models.Product) (string, error) {
+
+	product.CreatedAt = time.Now()
+
 	_, err := pr.collection.InsertOne(
 		context.Background(),
 		product,
@@ -56,7 +60,7 @@ func (pr *productRepo) GetAll(page, limit int64, name string) ([]*models.Product
 		products []*models.Product
 		filter   = bson.D{}
 	)
-
+	// fmt.Println(name)
 	if name != "" {
 		filter = append(filter, bson.E{Key: "name", Value: name})
 	}

@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -59,9 +60,11 @@ func HandleBadRequest(c *gin.Context, err error, msg string) {
 	})
 }
 func HandleInternalServerError(c *gin.Context, err error, msg string) {
+	fmt.Println(err)
+	fmt.Println(err)
 	c.JSON(http.StatusInternalServerError, gin.H{
 		"code":    http.StatusInternalServerError,
-		"error":   ErrorCodeInternal,
+		"error":   err,
 		"message": msg,
 	})
 }
