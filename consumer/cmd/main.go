@@ -7,15 +7,12 @@ import (
 
 	"github.com/Yangiboev/golang-mongodb-kafka/config"
 	"github.com/Yangiboev/golang-mongodb-kafka/pkg/logger"
-	"github.com/Yangiboev/golang-mongodb-kafka/storage/entity"
 	"github.com/Yangiboev/golang-mongodb-kafka/sub/handlers"
 	"github.com/Yangiboev/golang-mongodb-kafka/sub/kafka"
 	"github.com/Yangiboev/golang-mongodb-kafka/sub/parsers"
 	"github.com/Yangiboev/golang-mongodb-kafka/sub/topics"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
 )
 
 func main() {
@@ -47,7 +44,7 @@ func main() {
 
 	log.Info("connected", logger.Any("db", db.Name()))
 
-	lis, err := net.Listen("http", cfg.HTTPort)
+	_, err = net.Listen("tcp", cfg.RpcPort)
 
 	if err != nil {
 		log.Error("error while listening: %v", logger.Error(err))
@@ -55,11 +52,11 @@ func main() {
 	}
 
 	ps := parsers.NewParsers(log)
-	handler := handlers.EventHandler(&handlers.EventHandlerArgs{
+
+	handler := handlers.NewProductEventHandler(&handlers.EventHandlerArgs{
 		Logger:  log,
 		Parsers: ps,
 		DB:      db,
-		Product: []entity.Product{},
 	})
 
 	consumer, err := kafka.NewConsumer(&cfg, log, handler)
@@ -74,12 +71,6 @@ func main() {
 			log.Error("error", logger.Error(err))
 		}
 	}()
-
-	s := grpc.NewServer()
-	reflection.Register(s)
-
-	log.Info("main: server running", logger.Error(err))
-	if err := s.Serve(lis); err != nil {
-		log.Error("error while listening: %v", logger.Error(err))
-	}
+	log.Info("main: server running",
+		logger.String("port", cfg.RpcPort))
 }

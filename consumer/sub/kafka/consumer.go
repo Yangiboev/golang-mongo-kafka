@@ -32,6 +32,9 @@ func NewConsumer(cfg *config.Config, logger logger.Logger, productHandler *handl
 
 	err = productReader.SubscribeTopics([]string{"product"}, nil)
 
+	if err != nil {
+		return nil, err
+	}
 	return &Consumer{
 		kafkaReader:         productReader,
 		logger:              logger,

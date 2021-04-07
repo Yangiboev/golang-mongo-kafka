@@ -25,7 +25,7 @@ type EventHandlerArgs struct {
 	Product []*entity.Product
 }
 
-func NewproductEventHandler(args *EventHandlerArgs) *EventHandler {
+func NewProductEventHandler(args *EventHandlerArgs) *EventHandler {
 	return &EventHandler{
 		logger:  args.Logger,
 		parsers: args.Parsers,
