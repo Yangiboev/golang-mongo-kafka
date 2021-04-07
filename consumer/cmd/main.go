@@ -44,7 +44,7 @@ func main() {
 
 	log.Info("connected", logger.Any("db", db.Name()))
 
-	_, err = net.Listen("tcp", cfg.RpcPort)
+	_, err = net.Listen("tcp", cfg.Port)
 
 	if err != nil {
 		log.Error("error while listening: %v", logger.Error(err))
@@ -72,5 +72,5 @@ func main() {
 		}
 	}()
 	log.Info("main: server running",
-		logger.String("port", cfg.RpcPort))
+		logger.String("port", cfg.Port))
 }

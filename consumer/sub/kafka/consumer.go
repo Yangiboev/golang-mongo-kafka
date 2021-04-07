@@ -58,11 +58,12 @@ func (c *Consumer) Subscribe(topics []string) error {
 		}
 
 		err = c.productEventHandler.Handle(*msg.TopicPartition.Topic, msg.Key, msg.Value)
+
 		if err != nil {
 			c.logger.Error("Error while handling product events", logger.Error(err))
 		}
 
 		c.logger.Info(fmt.Sprintf(">>> Consumed message at topic/partition %v", msg.TopicPartition))
-		<-time.After(50 * time.Millisecond)
+		<-time.After(10 * time.Millisecond)
 	}
 }

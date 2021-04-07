@@ -19,7 +19,7 @@ func NewParsers(logger logger.Logger) *Parsers {
 	}
 }
 
-func (p *Parsers) Parseproduct(data []byte) (*entity.Product, error) {
+func (p *Parsers) ParseProduct(data []byte) (*entity.Product, error) {
 	product := entity.Product{}
 
 	if err := json.Unmarshal(data, &product); err != nil {

@@ -12,7 +12,7 @@ var (
 
 // Config ...
 type Config struct {
-	RpcPort       string
+	Port          string
 	Environment   string // develop, staging, production
 	MongoHost     string
 	MongoPort     int
@@ -36,7 +36,7 @@ func Load() Config {
 	c.MongoUser = cast.ToString(getOrReturnDefault("MONGO_USER", "dell"))
 	c.MongoPassword = cast.ToString(getOrReturnDefault("MONGO_PASSWORD", "icon"))
 	c.LogLevel = cast.ToString(getOrReturnDefault("LOG_LEVEL", "debug"))
-	c.RpcPort = cast.ToString(getOrReturnDefault("RPC_PORT", ":8081"))
+	c.Port = cast.ToString(getOrReturnDefault("RPC_PORT", ":8081"))
 	c.KafkaHost = cast.ToString(getOrReturnDefault("KAFKA_HOST", "localhost"))
 	c.KafkaPort = cast.ToInt(getOrReturnDefault("KAFKA_PORT", 9092))
 	c.KafkaTopic = cast.ToString(getOrReturnDefault("KAFKA_TOPIC", "msg.receive"))
